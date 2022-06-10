@@ -4,7 +4,7 @@ import Calc from './components/Calc.vue'
 
 <template>
   <div class="main">
-    <img class="reference" src="/iphone-vertical.jpg" alt="" srcset="">
+    <!-- <img class="reference" src="/iphone-vertical.jpg" alt="" srcset=""> -->
     <Calc />
   </div>
 </template>
@@ -19,6 +19,10 @@ import Calc from './components/Calc.vue'
 
 body {
   background-color: #000;
+  /* background-image: url('/iphone-vertical.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; */
 }
 
 

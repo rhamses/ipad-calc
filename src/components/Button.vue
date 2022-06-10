@@ -21,7 +21,7 @@
   min-width: 7em; */
   min-height: 22vw;
   min-width: 22vw;
-  margin: 0 0 0.438em 0;
+  margin: 0 0 0.938em 0;
   padding: 0;
 
   background-color: var(--keypad);
