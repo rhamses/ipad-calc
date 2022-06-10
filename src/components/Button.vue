@@ -19,9 +19,10 @@
 .calc--button {
   /* min-height: 7em;
   min-width: 7em; */
-  min-height: calc(21vw + 1vh);
+  min-height: 22vw;
   min-width: 22vw;
-  margin-bottom: 0.438em;
+  margin: 0 0 0.438em 0;
+  padding: 0;
 
   background-color: var(--keypad);
   border-radius: 50%;
@@ -34,7 +35,7 @@
 }
 
 .calc--button[data-value="0"] {
-  min-width: 44vw;
+  min-width: 46vw;
   border-radius: 50px;
 }
 </style>
