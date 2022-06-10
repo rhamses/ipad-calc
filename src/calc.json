@@ -1,0 +1,77 @@
+[{
+  "label": "AC",
+  "type": "options",
+  "action": null
+},{
+  "label": "+/-",
+  "type": "options",
+  "action": null
+},{
+  "label": "%",
+  "type": "options",
+  "action": null
+},{
+  "label": "/",
+  "type": "operation",
+  "action": "/"
+},{
+  "label": "7",
+  "type": "keypad",
+  "action": 7
+},{
+  "label": "8",
+  "type": "keypad",
+  "action": 8
+},{
+  "label": "9",
+  "type": "keypad",
+  "action": 9
+},{
+  "label": "X",
+  "type": "operation",
+  "action": "."
+},{
+  "label": "4",
+  "type": "keypad",
+  "action": 4
+},{
+  "label": "5",
+  "type": "keypad",
+  "action": 5
+},{
+  "label": "6",
+  "type": "keypad",
+  "action": 6
+},{
+  "label": "-",
+  "type": "operation",
+  "action": "-"
+},{
+  "label": "1",
+  "type": "keypad",
+  "action": 1
+},{
+  "label": "2",
+  "type": "keypad",
+  "action": 2
+},{
+  "label": "3",
+  "type": "keypad",
+  "action": 3
+},{
+  "label": "+",
+  "type": "operation",
+  "action": "+"
+},{
+  "label": "0",
+  "type": "keypad",
+  "action": 0
+},{
+  "label": ",",
+  "type": "keypad",
+  "action": ","
+},{
+  "label": "=",
+  "type": "operation",
+  "action": "="
+}]
