@@ -1,18 +1,16 @@
 <script setup>
 import Button from './Button.vue'
 import Calc from '../calc.json'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
-// Listen for orientation changes
-const landscape = ref(false)
-screen.orientation.addEventListener('change', (e) => {
-  if(e.currentTarget.type.includes('portrait')) {
-    landscape.value = false
-  } else {
-    landscape.value = true
-  }
-})
-
+// Function that checks device orientation
+function checkOrientation() {
+  return (screen.orientation.type.includes('portrait')) ? false : true;
+}
+// Initialize variable with checkOrientation value
+const landscape = ref(checkOrientation())
+// Check the same checkOrientation function every time the orientation changes
+screen.orientation.addEventListener('change', (e) => landscape.value = checkOrientation())
 </script>
 
 <template>
@@ -66,6 +64,10 @@ screen.orientation.addEventListener('change', (e) => {
   }
   .calc--buttons__extra {
     flex-basis: 60%;
+  }
+  .calc--buttons,
+  .calc--buttons__extra {
+    height: 80%;
   }
   .calc--header .visor {
     padding: 0.3em 0.35em 0 0;

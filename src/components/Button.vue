@@ -10,7 +10,7 @@
   const bgColor = ref(`var(--${props.type})`);
 </script>
 <template>
-  <button class="calc--button" :style="{backgroundColor: bgColor}" :data-value="action">
+  <button class="calc--button" :style="{backgroundColor: bgColor}" :data-value="action" :data-type="type">
     <span>{{label}}</span>
   </button>
 </template>
@@ -42,13 +42,18 @@
 }
 @media screen and (orientation: landscape) {
   .calc--button {
-    margin: .39em;
-    min-height: 12vh;
-    min-width: 15vh;
+    margin: 1.10%; /* .39em */
+    min-height: 14.28%; /* 12vh */
+    min-width: 20.58%; /* 15vh */
     border-radius: 50px;
   }
+  .calc--button[data-type="formula"] {
+    margin: 0.625%; /* .39em */
+    min-height: 12.15%; /* 12vh */
+    min-width: 14.17%; /* 15vh */
+  }
   .calc--button[data-value="0"] {
-    min-width: 30vh;
+    min-width: 45.16%; /* 30vh */
   }
   .calc--button span {
     font-size: 1.2rem;
