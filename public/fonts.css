@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/SF-Pro-Display-Regular.otf') format("otf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/SF-Pro-Display-Thin.otf') format("otf");
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/SF-Pro-Display-Bold.otf') format("otf");
+  font-weight: bold;
+}
+
+body {
+  font-family: 'SF Pro';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

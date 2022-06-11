@@ -4,6 +4,9 @@ import Calc from './components/Calc.vue'
 
 <template>
   <div class="main">
+    <!-- <p style="color: white; font-family: 'SF Pro'; font-weight: 300;">sf pro test light</p>
+    <p style="color: white; font-family: 'SF Pro'; font-weight: normal;">sf pro test regular</p>
+    <p style="color: white; font-family: 'SF Pro'; font-weight: bold;">sf pro test bold</p> -->
     <!-- <img class="reference" src="/iphone-vertical.jpg" alt="" srcset=""> -->
     <Calc />
   </div>
@@ -25,8 +28,6 @@ body {
   background-position: center; */
 }
 
-
-
 .reference {
   max-width: 100%;
   position: absolute;
@@ -34,15 +35,5 @@ body {
   left: 0;
   z-index: -1;
   opacity: .5;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #fff;
-  margin-top: 60px;
-
 }
 </style>
