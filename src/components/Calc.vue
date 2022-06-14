@@ -30,6 +30,8 @@ window.addEventListener('resize', () => landscape.value = checkOrientation())
 .calc {
   height: 100vh;
   width: 100vw;
+
+  font-size: 16px;
 }
 .calc--header .visor {
   margin: 0;
@@ -48,14 +50,13 @@ window.addEventListener('resize', () => landscape.value = checkOrientation())
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-
-  font-size: 16px;
 }
 @media screen and (orientation: landscape) {
   .calc {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-content: start;
   }
   .calc--buttons {
     flex-basis: 40%;
@@ -66,11 +67,7 @@ window.addEventListener('resize', () => landscape.value = checkOrientation())
   }
   .calc--buttons,
   .calc--buttons__extra {
-    height: 80%;
-  }
-  .calc--header .visor {
-    padding: 0.3em 0.35em 0 0;
-    font-size: 3rem;
+    height: 60%;
   }
 }
 @media screen and (orientation: portrait) {
@@ -81,24 +78,40 @@ window.addEventListener('resize', () => landscape.value = checkOrientation())
     position: relative;
   }
 }
+/* Media Query iPhone 11 Pro */
+@media only screen
+    and (device-width: 375px)
+    and (device-height: 812px)
+    and (orientation: portrait)
+    and (-webkit-device-pixel-ratio: 3) {
+      .calc {
+        height: 85vh;
+      }
+    }
 /*
 Media Query iPhone 11 Regular
 Media Query iPhone 11 Pro Max
+Portrait / Landscape
 */
-@media only screen 
-    and (device-width: 414px) 
-    and (device-height: 896px) { 
+@media only screen
+    and (device-width: 414px)
+    and (device-height: 896px)
+    and (orientation: portrait) {
       .calc {
         height: 85vh;
       }
     }
-/* Media Query iPhone 11 Pro */
-@media only screen 
-    and (device-width: 375px) 
-    and (device-height: 812px) 
-    and (-webkit-device-pixel-ratio: 3) { 
-      .calc {
-        height: 85vh;
+@media only screen
+    and (device-width: 414px)
+    and (device-height: 896px)
+    and (orientation: landscape) {
+      .calc--header .visor {
+        padding: 0.3em 0.35em 0 0;
+        font-size: 3rem;
       }
     }
+/* iPad */
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+
+}
 </style>
