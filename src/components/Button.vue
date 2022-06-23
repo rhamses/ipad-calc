@@ -1,16 +1,32 @@
 <script setup>
-  import { ref, reactive } from 'vue'
-
+  import { ref } from 'vue'
+  const emit = defineEmits(['getValue'])
   const props = defineProps({
     label: String,
     type: String,
     action: [Number, String]
   })
-   
   const bgColor = ref(`var(--${props.type})`);
+  let isActive = ref({'active': false});
+  function keyUpHandler(){
+    isActive.value.active = false;
+  }
+  function keyDownHandler(){
+    isActive.value.active = true;
+  }
+  function clickHandler(e){
+    emit('getValue', e.target.dataset.value)
+  }
 </script>
 <template>
-  <button class="calc--button" :style="{backgroundColor: bgColor}" :data-value="action" :data-type="type">
+  <button
+    class="calc--button"
+    @keyup="keyUpHandler"
+    @keydown="keyDownHandler"
+    @click="clickHandler"
+    :class="isActive"
+    :data-value="action"
+    :data-type="type">
     <span>{{label}}</span>
   </button>
 </template>
@@ -23,6 +39,9 @@
   background-color: var(--keypad);
   border: none;
 }
+.calc--button:hover {
+  background-color: var(--keypad-hover);
+}
 .calc--button span {
   color: #fff;
   font-family: 'SF Pro';
@@ -32,6 +51,18 @@
 .calc--button[data-value="0"] {
   min-width: 46vw;
   border-radius: 50px;
+}
+.calc--button[data-type="formula"]{
+  background-color: var(--formula);
+}
+.calc--button[data-type="keypad"] {
+  background-color: var(--keypad);
+}
+.calc--button[data-type="operation"] {
+  background-color: var(--operation);
+}
+.calc--button[data-type="options"] {
+  background-color: var(--options);
 }
 @media screen and (orientation: portrait) {
   .calc--button {

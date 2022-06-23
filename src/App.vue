@@ -11,9 +11,13 @@ import Calc from './components/Calc.vue'
 <style>
 :root {
   --keypad: rgb(51, 51, 51);
-  --operation:  rgb(240, 163, 72);
+  --keypad-hover: #737373;
+  --operation:  #F1A33C;
+  --operation-hover: #F3C995;
   --options: rgb(165, 165, 165);
+  --options-hover: #D9D9D9;
   --formula: rgb(33, 33, 33);
+  --formula-hover: #4D4D4D;
 }
 
 body {

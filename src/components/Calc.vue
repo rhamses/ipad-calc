@@ -10,18 +10,24 @@ function checkOrientation() {
 const landscape = ref(checkOrientation())
 // Check the same checkOrientation function every time the orientation changes
 window.addEventListener('resize', () => landscape.value = checkOrientation())
+// calc variables
+let calcResult = ref(0)
+
+function getValue(e) {
+  calcResult.value = e;
+}
 </script>
 
 <template>
   <section class="calc">
     <section class="calc--header">
-      <input type="text" disabled class="visor" value="0">
+      <input type="text" readonly class="visor" v-model="calcResult">
     </section>
     <section class="calc--buttons">
-      <Button :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
+      <Button @getValue="getValue" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
     </section>
     <section v-if="landscape" class="calc--buttons__extra">
-      <Button :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
+      <Button @getValue="getValue" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
     </section>
   </section>
 </template>
@@ -57,6 +63,10 @@ window.addEventListener('resize', () => landscape.value = checkOrientation())
     flex-direction: row;
     flex-wrap: wrap;
     align-content: start;
+  }
+  .calc--header .visor {
+    padding: 0.3em 0.35em 0 0;
+    font-size: 4rem;
   }
   .calc--buttons {
     flex-basis: 40%;
@@ -101,17 +111,37 @@ Portrait / Landscape
         height: 85vh;
       }
     }
+/* ----------- iPad 1, 2, Mini and Air Landscape ----------- */
 @media only screen
-    and (device-width: 414px)
-    and (device-height: 896px)
-    and (orientation: landscape) {
-      .calc--header .visor {
-        padding: 0.3em 0.35em 0 0;
-        font-size: 3rem;
-      }
-    }
-/* iPad */
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: landscape) {
+  .calc--header .visor {
+    padding: 1em 0.35em 0 0;
+    font-size: 6rem;
+  }
+}
 
+/* ----------- iPad 3, 4 and Pro 9.7" Landscape ----------- */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+  .calc--header .visor {
+    padding: 1em 0.35em 0 0;
+    font-size: 6rem;
+  }
+}
+/* ----------- iPad Pro 10.5" ----------- */
+@media only screen 
+  and (min-device-width: 1112px)
+  /* and (max-device-width: 1112px) */
+  and (orientation: landscape)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  .calc--header .visor {
+    padding: 1em 0.35em 0 0;
+    font-size: 6rem;
+  }
 }
 </style>
