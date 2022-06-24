@@ -10,16 +10,17 @@ function checkOrientation() {
 const landscape = ref(checkOrientation())
 // Check the same checkOrientation function every time the orientation changes
 window.addEventListener('resize', () => landscape.value = checkOrientation())
+// check to see if PWA is installed on iOS devices. If so, add css class to container
+const isInstalled = ref({'pwa-installed': window.navigator.standalone})
 // calc variables
 let calcResult = ref(0)
-
 function getValue(e) {
   calcResult.value = e;
 }
 </script>
 
 <template>
-  <section class="calc">
+  <section class="calc" :class="isInstalled">
     <section class="calc--header">
       <input type="text" readonly class="visor" v-model="calcResult">
     </section>
@@ -34,7 +35,7 @@ function getValue(e) {
 
 <style scoped>
 .calc {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 
   font-size: 16px;
@@ -62,10 +63,10 @@ function getValue(e) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-content: start;
+    align-content: flex-end;
   }
   .calc--header .visor {
-    padding: 0.3em 0.35em 0 0;
+    padding: 0 0.35em;
     font-size: 4rem;
   }
   .calc--buttons {
@@ -78,6 +79,7 @@ function getValue(e) {
   .calc--buttons,
   .calc--buttons__extra {
     height: 60%;
+    margin-bottom: var(--ios-margin);
   }
 }
 @media screen and (orientation: portrait) {
@@ -93,9 +95,9 @@ function getValue(e) {
     and (device-width: 375px)
     and (device-height: 812px)
     and (orientation: portrait)
-    and (-webkit-device-pixel-ratio: 3) {
-      .calc {
-        height: 85vh;
+        and (-webkit-device-pixel-ratio: 3) {
+      .calc.pwa-installed {
+        /* height: var(--ios-margin); */
       }
     }
 /*
@@ -107,8 +109,8 @@ Portrait / Landscape
     and (device-width: 414px)
     and (device-height: 896px)
     and (orientation: portrait) {
-      .calc {
-        height: 85vh;
+      .calc.pwa-installed {
+        /* height: var(--ios-margin); */
       }
     }
 /* ----------- iPad 1, 2, Mini and Air Landscape ----------- */
@@ -116,8 +118,10 @@ Portrait / Landscape
   and (min-device-width: 768px)
   and (max-device-width: 1024px)
   and (orientation: landscape) {
+  .calc.pwa-installed {
+    /* height: var(--ios-margin); */
+  }
   .calc--header .visor {
-    padding: 1em 0.35em 0 0;
     font-size: 6rem;
   }
 }
@@ -128,9 +132,15 @@ Portrait / Landscape
   and (max-device-width: 1024px) 
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
+  .calc.pwa-installed {
+    /* height: var(--ios-margin); */
+  }
   .calc--header .visor {
-    padding: 1em 0.35em 0 0;
     font-size: 6rem;
+  }
+  .calc--buttons,
+  .calc--buttons__extra {
+    margin-bottom: var(--ios-margin);
   }
 }
 /* ----------- iPad Pro 10.5" ----------- */
@@ -139,9 +149,15 @@ Portrait / Landscape
   /* and (max-device-width: 1112px) */
   and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 2) {
+  .calc.pwa-installed {
+    /* height: var(--ios-margin); */
+  }
   .calc--header .visor {
-    padding: 1em 0.35em 0 0;
     font-size: 6rem;
+  }
+  .calc--buttons,
+  .calc--buttons__extra {
+    margin-bottom: var(--ios-margin);
   }
 }
 </style>

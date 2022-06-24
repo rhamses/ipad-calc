@@ -3,9 +3,7 @@ import Calc from './components/Calc.vue'
 </script>
 
 <template>
-  <div class="main">
-    <Calc />
-  </div>
+  <Calc />
 </template>
 
 <style>
@@ -18,6 +16,8 @@ import Calc from './components/Calc.vue'
   --options-hover: #D9D9D9;
   --formula: rgb(33, 33, 33);
   --formula-hover: #4D4D4D;
+  --ios-height: 95vh;
+  --ios-margin: 2em;
 }
 
 body {
