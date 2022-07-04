@@ -15,7 +15,20 @@ const isInstalled = ref({'pwa-installed': window.navigator.standalone})
 // calc variables
 let calcResult = ref(0)
 function getValue(e) {
-  calcResult.value = e;
+  if(Number(e.action)) {
+    // Adding the new value
+    calcResult.value += String(e.action);
+    // check if is in the 1000s
+    if(calcResult.value.length >= 4) {
+      calcResult.value = calcResult.value[0] + '.' + calcResult.value.substring(1);
+    }
+    // Adding the value to the visor
+    if(Number(calcResult.value)) {
+      calcResult.value = Number(calcResult.value)
+    } else {
+      calcResult.value = calcResult.value
+    }
+  }
 }
 </script>
 
@@ -40,15 +53,18 @@ function getValue(e) {
 
   font-size: 16px;
 }
+.calc--header {
+  padding-right: var(--ios-margin);
+  width: 100%;
+}
 .calc--header .visor {
   margin: 0;
-  padding: 0.3em 0.35em 0 0;
-  width: 100vw;
+  padding: 0;
+  width: 100%;
 
   background-color: transparent;
   border: none;
   color: #fff;
-  font-size: 6rem;
   line-height: 1;
   text-align: right;
 }
@@ -66,8 +82,7 @@ function getValue(e) {
     align-content: flex-end;
   }
   .calc--header .visor {
-    padding: 0 0.35em;
-    font-size: 4rem;
+    font-size: 400%;
   }
   .calc--buttons {
     flex-basis: 40%;
@@ -78,16 +93,19 @@ function getValue(e) {
   }
   .calc--buttons,
   .calc--buttons__extra {
-    height: 60%;
-    margin-bottom: var(--ios-margin);
+    height: 75%;
+    padding-bottom: var(--ios-margin);
   }
 }
 @media screen and (orientation: portrait) {
   .calc {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     position: relative;
+  }
+  .calc--header .visor {
+    font-size: 600%;
   }
 }
 /* Media Query iPhone 11 Pro */
@@ -95,9 +113,9 @@ function getValue(e) {
     and (device-width: 375px)
     and (device-height: 812px)
     and (orientation: portrait)
-        and (-webkit-device-pixel-ratio: 3) {
+    and (-webkit-device-pixel-ratio: 3) {
       .calc.pwa-installed {
-        /* height: var(--ios-margin); */
+        padding-bottom: var(--ios-margin);
       }
     }
 /*
@@ -110,7 +128,7 @@ Portrait / Landscape
     and (device-height: 896px)
     and (orientation: portrait) {
       .calc.pwa-installed {
-        /* height: var(--ios-margin); */
+        padding-bottom: var(--ios-margin);
       }
     }
 /* ----------- iPad 1, 2, Mini and Air Landscape ----------- */
@@ -119,11 +137,22 @@ Portrait / Landscape
   and (max-device-width: 1024px)
   and (orientation: landscape) {
   .calc.pwa-installed {
-    /* height: var(--ios-margin); */
+    padding-bottom: var(--ios-margin);
   }
   .calc--header .visor {
     font-size: 6rem;
   }
+}
+/* ----------- iPad 1, 2, Mini and Air Portrait ----------- */
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait) {
+    .calc {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 70vw;
+    }
 }
 
 /* ----------- iPad 3, 4 and Pro 9.7" Landscape ----------- */
@@ -133,14 +162,14 @@ Portrait / Landscape
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
   .calc.pwa-installed {
-    /* height: var(--ios-margin); */
+    padding-bottom: var(--ios-margin);
   }
   .calc--header .visor {
     font-size: 6rem;
   }
   .calc--buttons,
   .calc--buttons__extra {
-    margin-bottom: var(--ios-margin);
+    padding-bottom: var(--ios-margin);
   }
 }
 /* ----------- iPad Pro 10.5" ----------- */
@@ -150,14 +179,14 @@ Portrait / Landscape
   and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 2) {
   .calc.pwa-installed {
-    /* height: var(--ios-margin); */
+    padding-bottom: var(--ios-margin);
   }
   .calc--header .visor {
     font-size: 6rem;
   }
   .calc--buttons,
   .calc--buttons__extra {
-    margin-bottom: var(--ios-margin);
+    padding-bottom: var(--ios-margin);
   }
 }
 </style>

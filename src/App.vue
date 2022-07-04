@@ -23,4 +23,11 @@ import Calc from './components/Calc.vue'
 body {
   background-color: #000;
 }
+
+.teste {
+  height: 50px;
+  width: 50%;
+  border-radius: 50%;
+  background-color: pink;
+}
 </style>

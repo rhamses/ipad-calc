@@ -15,7 +15,7 @@
     isActive.value.active = true;
   }
   function clickHandler(e){
-    emit('getValue', e.target.dataset.value)
+    emit('getValue', props)
   }
 </script>
 <template>
@@ -45,11 +45,10 @@
 .calc--button span {
   color: #fff;
   font-family: 'SF Pro';
-  font-size: 2em;
+  font-size: 300%;
   font-weight: bold;
 }
 .calc--button[data-value="0"] {
-  min-width: 46vw;
   border-radius: 50px;
 }
 .calc--button[data-type="formula"]{
@@ -66,9 +65,13 @@
 }
 @media screen and (orientation: portrait) {
   .calc--button {
-    min-height: 22vw;
-    min-width: 22vw;
+    aspect-ratio: 1/1;
+    min-width: 21.87%;
     border-radius: 50%;
+  }
+  .calc--button[data-value="0"] {
+    aspect-ratio: 1/.5;
+    min-width: 43.75%;
   }
 }
 @media screen and (orientation: landscape) {
