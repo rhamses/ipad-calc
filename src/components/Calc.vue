@@ -18,9 +18,23 @@ function getValue(e) {
   if(Number(e.action)) {
     // Adding the new value
     calcResult.value += String(e.action);
-    // check if is in the 1000s
-    if(calcResult.value.length >= 4) {
-      calcResult.value = calcResult.value[0] + '.' + calcResult.value.substring(1);
+    // Get only the numbers then Transform into a string to break each one
+    const numbers = calcResult.value.match(/\d/gmi).reverse();
+    const chunk = 3
+    const parts = Math.ceil(numbers.length/chunk)
+    const newNumber = []
+    if(numbers.length > 3) {
+      for (let index = 0; index < parts; index++) {
+        const sliceBegin = index * chunk;
+        const sliceEnd = (index * chunk) + chunk;
+        if(index + 1 < parts) {
+          newNumber.push(...numbers.slice(sliceBegin, sliceEnd))
+          newNumber.push('.')
+        } else {
+          newNumber.push(...numbers.slice(sliceBegin, numbers.length))
+        }
+      }
+      calcResult.value = newNumber.reverse().join("")
     }
     // Adding the value to the visor
     if(Number(calcResult.value)) {
