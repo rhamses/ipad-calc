@@ -18,6 +18,7 @@ import Calc from './components/Calc.vue'
   --formula-hover: #4D4D4D;
   --ios-height: 95vh;
   --ios-margin: 2em;
+  --visor-font-size: 600%;
 }
 
 body {

@@ -1,7 +1,7 @@
 <script setup>
 import Button from './Button.vue'
 import Calc from '../calc.json'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 // Function that checks device orientation
 function checkOrientation() {
   return window.matchMedia("(orientation: portrait)").matches ? false : true;
@@ -16,6 +16,7 @@ const isInstalled = ref({'pwa-installed': window.navigator.standalone})
 let calcResult = ref(0)
 function getValue(e) {
   if(Number(e.action)) {
+    console.log("number value", e.action)
     // Adding the new value
     calcResult.value += String(e.action);
     // Get only the numbers then Transform into a string to break each one
@@ -44,12 +45,27 @@ function getValue(e) {
     }
   }
 }
+// Watch visor font size by creating a fake element on screen
+let visorFontSize = ref({fontSize: "600%"})
+watch(calcResult, async (newValue, oldValue) => {
+  const visor = document.querySelector("#visor");
+  const fakeVisor = document.querySelector("#fakevisor");
+  fakeVisor.innerHTML = newValue;
+  const fakeVisorWidth = fakeVisor.clientWidth - fakeVisor.clientWidth * (8/100)
+  console.log(newValue, fakeVisor.clientWidth, visor.clientWidth)
+  if(fakeVisorWidth >= visor.clientWidth) {
+    const oldFontSize = Number(visorFontSize.value.fontSize.replace("%",''))
+    const newFontSize =  oldFontSize - oldFontSize * (20/100) + "%";
+    visorFontSize.value = ({"fontSize": newFontSize})
+  }
+})
 </script>
 
 <template>
   <section class="calc" :class="isInstalled">
     <section class="calc--header">
-      <input type="text" readonly class="visor" v-model="calcResult">
+      <input id="visor" type="text" readonly class="visor" :style="visorFontSize" v-model="calcResult">
+      <div id="fakevisor" class="visor" :style="visorFontSize" style="position:absolute; width: auto; opacity: 0"></div>
     </section>
     <section class="calc--buttons">
       <Button @getValue="getValue" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
@@ -68,10 +84,10 @@ function getValue(e) {
   font-size: 16px;
 }
 .calc--header {
-  padding-right: var(--ios-margin);
+  padding-right: 8.20% ;
   width: 100%;
 }
-.calc--header .visor {
+.visor {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -95,7 +111,7 @@ function getValue(e) {
     flex-wrap: wrap;
     align-content: flex-end;
   }
-  .calc--header .visor {
+  .visor {
     font-size: 400%;
   }
   .calc--buttons {
@@ -118,7 +134,7 @@ function getValue(e) {
     justify-content: flex-end;
     position: relative;
   }
-  .calc--header .visor {
+  .visor {
     font-size: 600%;
   }
 }
@@ -153,7 +169,7 @@ Portrait / Landscape
   .calc.pwa-installed {
     padding-bottom: var(--ios-margin);
   }
-  .calc--header .visor {
+  .visor {
     font-size: 6rem;
   }
 }
@@ -178,7 +194,7 @@ Portrait / Landscape
   .calc.pwa-installed {
     padding-bottom: var(--ios-margin);
   }
-  .calc--header .visor {
+  .visor {
     font-size: 6rem;
   }
   .calc--buttons,
@@ -195,7 +211,7 @@ Portrait / Landscape
   .calc.pwa-installed {
     padding-bottom: var(--ios-margin);
   }
-  .calc--header .visor {
+  .visor {
     font-size: 6rem;
   }
   .calc--buttons,
