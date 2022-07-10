@@ -2,16 +2,14 @@
 import Button from './Button.vue'
 import Calc from '../calc.json'
 import { ref, watch } from 'vue'
-// Function that checks device orientation
-function checkOrientation() {
-  return window.matchMedia("(orientation: portrait)").matches ? false : true;
-}
+import { Responsive } from '../functions/responsive.js'
+const ResponsiveUtils = new Responsive();
 // Initialize variable with checkOrientation value
-const landscape = ref(checkOrientation())
 // Check the same checkOrientation function every time the orientation changes
-window.addEventListener('resize', () => landscape.value = checkOrientation())
+const landscape = ref(ResponsiveUtils.orientation)
+window.addEventListener('resize', () => landscape.value = ResponsiveUtils.orientation)
 // check to see if PWA is installed on iOS devices. If so, add css class to container
-const isInstalled = ref({'pwa-installed': window.navigator.standalone})
+const isInstalled = ResponsiveUtils.PWAisInstalled
 // calc variables
 let calcResult = ref(0)
 function getValue(e) {
