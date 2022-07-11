@@ -37,12 +37,6 @@ function getValue(e) {
 window.addEventListener('keyDown', (e) => {
   console.log(e)
 })
-<<<<<<< HEAD
-// Listen to keydown values 
-window.addEventListener('keydown', (e) => {
-  console.log(e, e.key, Calc)
-})
-=======
 window.addEventListener('resize', () => {
   landscape.value = orientation
 })
@@ -60,7 +54,6 @@ window.addEventListener('resize', () => {
 //     visorFontSize.value = ({"fontSize": newFontSize})
 //   }
 // })
->>>>>>> pwa-settings
 </script>
 
 <template>
