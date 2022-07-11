@@ -8,10 +8,6 @@
   })
   const bgColor = ref(`var(--${props.type})`);
   let isActive = ref({'active': false});
-  
-  function clickHandler(e){
-    emit('getValue', props)
-  }
 </script>
 <template>
   <button

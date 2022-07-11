@@ -3,17 +3,17 @@ export class Responsive {
     this.isPortrait = null
     this.monitorOrientation();    
   }
-
-  get orientation(){
+// Initialize variable with checkOrientation value
+  static get orientation(){
     return this.isOrientation()
   }
-
-  get PWAisInstalled(){
+// check to see if PWA is installed on iOS devices. If so, add css class to container
+  static get isInstalled(){
     return {
       'pwa-installed': window.navigator.standalone
     }
   }
-
+// Check the same checkOrientation function every time the orientation changes
   monitorOrientation(){
     window.addEventListener('resize', () => this.isOrientation())
   }

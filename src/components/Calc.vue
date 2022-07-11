@@ -3,75 +3,70 @@ import Button from './Button.vue'
 import Calc from '../calc.json'
 import { ref, watch } from 'vue'
 import { Responsive } from '../functions/responsive.js'
+import { VisorClass } from '../functions/visor.js'
+/********************************************************
+ *
+ * INITIALIZATION
+ *
+********************************************************/
 const ResponsiveUtils = new Responsive();
-// Initialize variable with checkOrientation value
-// Check the same checkOrientation function every time the orientation changes
-const landscape = ref(ResponsiveUtils.orientation)
-window.addEventListener('resize', () => landscape.value = ResponsiveUtils.orientation)
-// check to see if PWA is installed on iOS devices. If so, add css class to container
-const isInstalled = ResponsiveUtils.PWAisInstalled
-// calc variables
-let calcResult = ref(0)
+const Visor = new VisorClass();
+/********************************************************
+ *
+ * RESPONSIVE PROPERTIES
+ *
+********************************************************/
+const { isInstalled, orientation } = ResponsiveUtils
+const landscape = ref(orientation)
+/********************************************************
+ *
+ * FUNCTIONS
+ *
+********************************************************/
 function getValue(e) {
   if(Number(e.action)) {
-    console.log("number value", e.action)
-    // Adding the new value
-    calcResult.value += String(e.action);
-    // Get only the numbers then Transform into a string to break each one
-    const numbers = calcResult.value.match(/\d/gmi).reverse();
-    const chunk = 3
-    const parts = Math.ceil(numbers.length/chunk)
-    const newNumber = []
-    if(numbers.length > 3) {
-      for (let index = 0; index < parts; index++) {
-        const sliceBegin = index * chunk;
-        const sliceEnd = (index * chunk) + chunk;
-        if(index + 1 < parts) {
-          newNumber.push(...numbers.slice(sliceBegin, sliceEnd))
-          newNumber.push('.')
-        } else {
-          newNumber.push(...numbers.slice(sliceBegin, numbers.length))
-        }
-      }
-      calcResult.value = newNumber.reverse().join("")
-    }
-    // Adding the value to the visor
-    if(Number(calcResult.value)) {
-      calcResult.value = Number(calcResult.value)
-    } else {
-      calcResult.value = calcResult.value
-    }
+    Visor.newNumber = e.action;
+    Visor.calcNumber()
   }
 }
-// Watch visor font size by creating a fake element on screen
-let visorFontSize = ref({fontSize: "600%"})
-watch(calcResult, async (newValue, oldValue) => {
-  const visor = document.querySelector("#visor");
-  const fakeVisor = document.querySelector("#fakevisor");
-  fakeVisor.innerHTML = newValue;
-  const fakeVisorWidth = fakeVisor.clientWidth - fakeVisor.clientWidth * (8/100)
-  console.log(newValue, fakeVisor.clientWidth, visor.clientWidth)
-  if(fakeVisorWidth >= visor.clientWidth) {
-    const oldFontSize = Number(visorFontSize.value.fontSize.replace("%",''))
-    const newFontSize =  oldFontSize - oldFontSize * (20/100) + "%";
-    visorFontSize.value = ({"fontSize": newFontSize})
-  }
+/********************************************************
+ *
+ * SCREEN FUNCTIONS
+ *
+********************************************************/
+window.addEventListener('keyDown', (e) => {
+  console.log(e)
 })
-//
-//
+window.addEventListener('resize', () => {
+  landscape.value = orientation
+})
+// Watch visor font size by creating a fake element on screen
+// let visorFontSize = ref({fontSize: "600%"})
+// watch(Visor.getNumber, async (newValue, oldValue) => {
+//   const visor = document.querySelector("#visor");
+//   const fakeVisor = document.querySelector("#fakevisor");
+//   fakeVisor.innerHTML = newValue;
+//   const fakeVisorWidth = fakeVisor.clientWidth - fakeVisor.clientWidth * (8/100)
+//   console.log(newValue, fakeVisor.clientWidth, visor.clientWidth)
+//   if(fakeVisorWidth >= visor.clientWidth) {
+//     const oldFontSize = Number(visorFontSize.value.fontSize.replace("%",''))
+//     const newFontSize =  oldFontSize - oldFontSize * (20/100) + "%";
+//     visorFontSize.value = ({"fontSize": newFontSize})
+//   }
+// })
 </script>
 
 <template>
   <section class="calc" :class="isInstalled">
     <section class="calc--header">
-      <input id="visor" type="text" readonly class="visor" :style="visorFontSize" v-model="calcResult">
+      <input id="visor" type="text" readonly class="visor" :style="visorFontSize" v-model="Visor.showNumber">
       <div id="fakevisor" class="visor" :style="visorFontSize" style="position:absolute; width: auto; opacity: 0"></div>
     </section>
     <section class="calc--buttons">
-      <Button @click="getValue(item.action)" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
+      <Button @click="getValue(item)" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
     </section>
     <section v-if="landscape" class="calc--buttons__extra">
-      <Button @click="getValue(item.action)"  :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
+      <Button @click="getValue(item)"  :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
     </section>
   </section>
 </template>
