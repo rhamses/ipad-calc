@@ -59,6 +59,10 @@ watch(calcResult, async (newValue, oldValue) => {
     visorFontSize.value = ({"fontSize": newFontSize})
   }
 })
+// Listen to keydown values 
+window.addEventListener('keydown', (e) => {
+  console.log(e, e.key, Calc)
+})
 </script>
 
 <template>
