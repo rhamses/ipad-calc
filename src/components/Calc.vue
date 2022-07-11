@@ -10,7 +10,11 @@ import { VisorClass } from '../functions/visor.js'
  *
 ********************************************************/
 const ResponsiveUtils = new Responsive();
-const Visor = new VisorClass();
+const Visor = new VisorClass({
+  chunkSize: 3,
+  visorID: "#visor"
+});
+const teste = ref(Visor.showNumber)
 /********************************************************
  *
  * RESPONSIVE PROPERTIES
@@ -34,32 +38,26 @@ function getValue(e) {
  * SCREEN FUNCTIONS
  *
 ********************************************************/
-window.addEventListener('keyDown', (e) => {
-  console.log(e)
+window.addEventListener('keydown', (e) => {
+  // console.log(e.key)
+  const key = Calc.standard.filter(item => {
+    if(item.label === e.key) {
+      return item
+    }
+  })[0]
+  if(key) {
+    getValue(key)
+  }
 })
 window.addEventListener('resize', () => {
   landscape.value = orientation
 })
-// Watch visor font size by creating a fake element on screen
-// let visorFontSize = ref({fontSize: "600%"})
-// watch(Visor.getNumber, async (newValue, oldValue) => {
-//   const visor = document.querySelector("#visor");
-//   const fakeVisor = document.querySelector("#fakevisor");
-//   fakeVisor.innerHTML = newValue;
-//   const fakeVisorWidth = fakeVisor.clientWidth - fakeVisor.clientWidth * (8/100)
-//   console.log(newValue, fakeVisor.clientWidth, visor.clientWidth)
-//   if(fakeVisorWidth >= visor.clientWidth) {
-//     const oldFontSize = Number(visorFontSize.value.fontSize.replace("%",''))
-//     const newFontSize =  oldFontSize - oldFontSize * (20/100) + "%";
-//     visorFontSize.value = ({"fontSize": newFontSize})
-//   }
-// })
 </script>
 
 <template>
   <section class="calc" :class="isInstalled">
     <section class="calc--header">
-      <input id="visor" type="text" readonly class="visor" :style="visorFontSize" v-model="Visor.showNumber">
+      <input id="visor" type="text" readonly class="visor" :style="Visor.fontSize" v-model="Visor.showNumber">
       <div id="fakevisor" class="visor" :style="visorFontSize" style="position:absolute; width: auto; opacity: 0"></div>
     </section>
     <section class="calc--buttons">

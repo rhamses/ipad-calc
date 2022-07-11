@@ -1,8 +1,11 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 export class VisorClass {
-  constructor(){
-    this.chunk = 3
+  constructor({chunkSize, visorID}){
+    this.chunk = chunkSize
     this.number = ref(0)
+    this.visorID = visorID
+    this.visorFontSize = ref({fontSize: "600%"})
+    this.#watchNumber()
   }
   get showNumber(){
     if(Number(this.number.value)) {
@@ -12,15 +15,30 @@ export class VisorClass {
     }
     return this.number.value;
   }
+  get fontSize(){
+    return this.visorFontSize.value
+  }
   set newNumber(number){
     this.number.value += String(number)
   }
-
   calcNumber(){
     this.#breakNumbers();
     return this.number.value;
   }
-
+  #watchNumber(){
+    watch(this.number, async(newValue, oldValue) => {
+      const visor = document.querySelector("#visor");
+      const fakeVisor = document.querySelector("#fakevisor");
+      fakeVisor.innerHTML = newValue;
+      const fakeVisorWidth = fakeVisor.clientWidth - fakeVisor.clientWidth * (8/100)
+      // console.log(newValue, fakeVisor.clientWidth, visor.clientWidth)
+      if(fakeVisorWidth >= visor.clientWidth) {
+        const oldFontSize = Number(this.visorFontSize.value.fontSize.replace("%",''))
+        const newFontSize =  oldFontSize - oldFontSize * (20/100) + "%";
+        this.visorFontSize.value = ({"fontSize": newFontSize})
+      }
+    })
+  }
   #breakNumbers(){
     const numbers = this.number.value.match(/\d/gmi).reverse();
     const parts = Math.ceil(numbers.length/this.chunk)
