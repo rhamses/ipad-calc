@@ -16,7 +16,6 @@
 <template>
   <button
     class="calc--button"
-    @click="clickHandler"
     :class="isActive"
     :data-value="action"
     :data-type="type">

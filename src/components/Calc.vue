@@ -57,6 +57,8 @@ watch(calcResult, async (newValue, oldValue) => {
     visorFontSize.value = ({"fontSize": newFontSize})
   }
 })
+//
+//
 </script>
 
 <template>
@@ -66,10 +68,10 @@ watch(calcResult, async (newValue, oldValue) => {
       <div id="fakevisor" class="visor" :style="visorFontSize" style="position:absolute; width: auto; opacity: 0"></div>
     </section>
     <section class="calc--buttons">
-      <Button @getValue="getValue" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
+      <Button @click="getValue(item.action)" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
     </section>
     <section v-if="landscape" class="calc--buttons__extra">
-      <Button @getValue="getValue" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
+      <Button @click="getValue(item.action)"  :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
     </section>
   </section>
 </template>
