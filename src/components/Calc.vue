@@ -14,7 +14,6 @@ const Visor = new VisorClass({
   chunkSize: 3,
   visorID: "#visor"
 });
-const teste = ref(Visor.showNumber)
 /********************************************************
  *
  * RESPONSIVE PROPERTIES
@@ -28,9 +27,20 @@ const landscape = ref(orientation)
  *
 ********************************************************/
 function getValue(e) {
-  if(Number(e.action)) {
-    Visor.newNumber = e.action;
-    Visor.calcNumber()
+  console.log(e)
+  switch(e.type){
+    case "keypad":
+      if(Number(e.action)) {
+        Visor.newNumber = e.action;
+        Visor.calcNumber()
+      }
+    break;
+    case "operation":
+      console.log("asd")
+    break;
+    default:
+      console.log("life that follows")
+    break;
   }
 }
 /********************************************************
@@ -58,7 +68,7 @@ window.addEventListener('resize', () => {
   <section class="calc" :class="isInstalled">
     <section class="calc--header">
       <input id="visor" type="text" readonly class="visor" :style="Visor.fontSize" v-model="Visor.showNumber">
-      <div id="fakevisor" class="visor" :style="visorFontSize" style="position:absolute; width: auto; opacity: 0"></div>
+      <div id="fakevisor" class="visor" :style="Visor.fontSize" style="position:absolute; width: auto; opacity: 0"></div>
     </section>
     <section class="calc--buttons">
       <Button @click="getValue(item)" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
