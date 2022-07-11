@@ -8,22 +8,10 @@
   })
   const bgColor = ref(`var(--${props.type})`);
   let isActive = ref({'active': false});
-  function keyUpHandler(){
-    isActive.value.active = false;
-  }
-  function keyDownHandler(){
-    isActive.value.active = true;
-  }
-  function clickHandler(e){
-    emit('getValue', props)
-  }
 </script>
 <template>
   <button
     class="calc--button"
-    @keyup="keyUpHandler"
-    @keydown="keyDownHandler"
-    @click="clickHandler"
     :class="isActive"
     :data-value="action"
     :data-type="type">
