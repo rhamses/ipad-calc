@@ -2,15 +2,15 @@
   "standard": [{
     "label": "AC",
     "type": "options",
-    "action": null
+    "action": "reset"
   },{
     "label": "+/-",
     "type": "options",
-    "action": null
+    "action": "minus one"
   },{
     "label": "%",
     "type": "options",
-    "action": null
+    "action": "percentage"
   },{
     "label": "/",
     "type": "operation",

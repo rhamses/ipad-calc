@@ -35,15 +35,14 @@ const pwaOptions = {
 }
 
 const ssl = {
-  key: '/Users/rhamses/Sites/__ssl/localhost.key',
-  cert: '/Users/rhamses/Sites/__ssl/localhost.crt',
-  ca: ['/Users/rhamses/Sites/__ssl/RootCA.crt']
+  key: '/Users/rhamses/192.168.1.129-key.pem',
+  cert: '/Users/rhamses/192.168.1.129.pem'
 }
 
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    https: false
+    https: ssl
   },
   plugins: [vue(), VitePWA(pwaOptions)]
 })

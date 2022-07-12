@@ -1,9 +1,10 @@
 <script setup>
 import Button from './Button.vue'
 import Calc from '../calc.json'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { Responsive } from '../functions/responsive.js'
 import { VisorClass } from '../functions/visor.js'
+import { FormulaClass } from '../functions/formulas'
 /********************************************************
  *
  * INITIALIZATION
@@ -14,6 +15,7 @@ const Visor = new VisorClass({
   chunkSize: 3,
   visorID: "#visor"
 });
+const Formula = new FormulaClass()
 /********************************************************
  *
  * RESPONSIVE PROPERTIES
@@ -30,13 +32,32 @@ function getValue(e) {
   console.log(e)
   switch(e.type){
     case "keypad":
-      if(Number(e.action)) {
-        Visor.newNumber = e.action;
-        Visor.calcNumber()
+      if(Formula.operation) {
+        Visor.clearVisor();
+        Visor.newNumber = e.action
+        Formula.setNumber = Visor.rawNumber
+      } else {
+        Visor.newNumber = e.action
       }
+      Visor.calcNumber()
     break;
     case "operation":
       console.log("asd")
+    break;
+    case "options":
+      console.log("rawNumber", Visor.rawNumber)
+      Formula.setNumber = Visor.rawNumber
+      Formula.setAction = e;
+      Visor.clearVisor();
+      console.log("Formula.result", Formula.result)
+      Visor.newNumber = Formula.result;
+    break;
+    case "operation":
+      console.log("rawNumber", Visor.rawNumber)
+      Formula.setNumber = Visor.rawNumber
+      Formula.setAction = e;
+      console.log("Formula.result", Formula.result)
+      Visor.newNumber = Formula.result;
     break;
     default:
       console.log("life that follows")
@@ -68,7 +89,7 @@ window.addEventListener('resize', () => {
   <section class="calc" :class="isInstalled">
     <section class="calc--header">
       <input id="visor" type="text" readonly class="visor" :style="Visor.fontSize" v-model="Visor.showNumber">
-      <div id="fakevisor" class="visor" :style="Visor.fontSize" style="position:absolute; width: auto; opacity: 0"></div>
+      <div id="fakevisor" class="visor" :style="Visor.fontSize" style="position:absolute; width: auto; opacity: 0; top: 0; z-index: -1"></div>
     </section>
     <section class="calc--buttons">
       <Button @click="getValue(item)" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>

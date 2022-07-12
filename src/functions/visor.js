@@ -18,12 +18,21 @@ export class VisorClass {
   get fontSize(){
     return this.visorFontSize.value
   }
+  get rawNumber(){
+    if(typeof this.number.value === "string" && this.number.value.match(/\d/gmi)) {
+      return Number(this.number.value.match(/\d/gmi).join(""))
+    }
+    return this.number.value
+  }
   set newNumber(number){
-    this.number.value += String(number)
+    this.#setNewNumber(number)
   }
   calcNumber(){
     this.#breakNumbers();
     return this.number.value;
+  }
+  clearVisor(){
+    this.number.value = ""
   }
   #watchNumber(){
     watch(this.number, async(newValue, oldValue) => {
@@ -38,7 +47,7 @@ export class VisorClass {
         this.visorFontSize.value = ({"fontSize": newFontSize})
       }
     })
-  }
+  }  
   #breakNumbers(){
     const numbers = this.number.value.match(/\d/gmi).reverse();
     const parts = Math.ceil(numbers.length/this.chunk)
@@ -56,5 +65,8 @@ export class VisorClass {
       }
       return this.number.value = newNumber.reverse().join("")
     }
+  }
+  #setNewNumber(nwNumber) {
+    this.number.value += String(nwNumber)
   }
 }
