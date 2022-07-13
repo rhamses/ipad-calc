@@ -45,19 +45,22 @@ function getValue(e) {
       console.log("asd")
     break;
     case "options":
-      console.log("rawNumber", Visor.rawNumber)
+      console.log("options rawNumber", Visor.rawNumber)
       Formula.setNumber = Visor.rawNumber
       Formula.setAction = e;
       Visor.clearVisor();
       console.log("Formula.result", Formula.result)
-      Visor.newNumber = Formula.result;
+      Visor.newNumber = Formula.result
+      Visor.calcNumber()
     break;
     case "operation":
-      console.log("rawNumber", Visor.rawNumber)
+      console.log("operation rawNumber", Visor.rawNumber)
       Formula.setNumber = Visor.rawNumber
       Formula.setAction = e;
       console.log("Formula.result", Formula.result)
       Visor.newNumber = Formula.result;
+      Visor.clearVisor();
+      Visor.calcNumber()
     break;
     default:
       console.log("life that follows")

@@ -8,7 +8,8 @@ export class FormulaClass {
     this.currentPressedButton = null
   }
   set setNumber(newNumber) {
-    if(this.action === null) {
+    console.log("formula newNumber)", newNumber)
+    if(this.firstNumber === null) {
       this.firstNumber = newNumber
     } else {
       this.secondNumber = newNumber

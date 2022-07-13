@@ -20,7 +20,7 @@ export class VisorClass {
   }
   get rawNumber(){
     if(typeof this.number.value === "string" && this.number.value.match(/\d/gmi)) {
-      return Number(this.number.value.match(/\d/gmi).join(""))
+      return Number(this.number.value.replace(".","").replace(",","."))
     }
     return this.number.value
   }
@@ -49,9 +49,12 @@ export class VisorClass {
     })
   }  
   #breakNumbers(){
-    const numbers = this.number.value.match(/\d/gmi).reverse();
+    const decimal = (this.number.value.includes(",")) ? this.number.value.split(",")[1] : null;
+    let numbers = (this.number.value.includes(",")) ? this.number.value.split(",")[0] : this.number.value;
+    numbers = numbers.match(/\d/gmi).reverse()
     const parts = Math.ceil(numbers.length/this.chunk)
     const newNumber = []
+    // console.log("numbers", numbers, "parts", parts, "decimal", decimal)
     if(numbers.length > 3) {
       for (let index = 0; index < parts; index++) {
         const sliceBegin = index * this.chunk;
@@ -63,10 +66,24 @@ export class VisorClass {
           newNumber.push(...numbers.slice(sliceBegin, numbers.length))
         }
       }
+      // adding the decimal point as comma
+      if(this.number.value.includes(",")) {
+        newNumber.unshift(decimal , ',')
+      }
+      // adding minus sinal again
+      if(this.number.value.includes("-")) {
+        newNumber.push('-')
+      }
+      console.log("newNumber", newNumber)
       return this.number.value = newNumber.reverse().join("")
     }
   }
   #setNewNumber(nwNumber) {
+    console.log("setNewNumberm", nwNumber)
+    if(!Number.isInteger(nwNumber) && String(nwNumber) !== ",") {
+      console.log(",,,")
+      nwNumber = String(nwNumber).replace(".",",")
+    }
     this.number.value += String(nwNumber)
   }
 }
