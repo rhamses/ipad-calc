@@ -30,7 +30,7 @@
   },{
     "label": "X",
     "type": "operation",
-    "action": "."
+    "action": "*"
   },{
     "label": "4",
     "type": "keypad",

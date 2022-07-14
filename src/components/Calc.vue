@@ -28,8 +28,12 @@ const landscape = ref(orientation)
  * FUNCTIONS
  *
 ********************************************************/
+function showVisor(number){
+  Visor.clearVisor()
+  Visor.newNumber = number
+  Visor.calcNumber()
+}
 function getValue(e) {
-  console.log(e)
   switch(e.type){
     case "keypad":
       if(Formula.operation) {
@@ -41,26 +45,16 @@ function getValue(e) {
       }
       Visor.calcNumber()
     break;
-    case "operation":
-      console.log("asd")
-    break;
     case "options":
-      console.log("options rawNumber", Visor.rawNumber)
       Formula.setNumber = Visor.rawNumber
-      Formula.setAction = e;
-      Visor.clearVisor();
-      console.log("Formula.result", Formula.result)
-      Visor.newNumber = Formula.result
-      Visor.calcNumber()
+      Formula.setAction = e
+      showVisor(Formula.result)
     break;
     case "operation":
-      console.log("operation rawNumber", Visor.rawNumber)
+      console.log("Visor.rawNumber", Visor.rawNumber)
       Formula.setNumber = Visor.rawNumber
-      Formula.setAction = e;
-      console.log("Formula.result", Formula.result)
-      Visor.newNumber = Formula.result;
-      Visor.clearVisor();
-      Visor.calcNumber()
+      Formula.setAction = e
+      showVisor(Formula.result)
     break;
     default:
       console.log("life that follows")

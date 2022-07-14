@@ -1,28 +1,33 @@
 export class FormulaClass {
   constructor(){
-    this.firstNumber = null
-    this.secondNumber = null
+    this.firstNumber = 0
+    this.secondNumber = 0
+    this.finalValue = 0
     this.action = null
     this.operation = null
-    this.result = null
     this.currentPressedButton = null
   }
   set setNumber(newNumber) {
-    console.log("formula newNumber)", newNumber)
-    if(this.firstNumber === null) {
+    if(this.firstNumber === 0) {
       this.firstNumber = newNumber
-    } else {
+    } else if (this.secondNumber === 0){
       this.secondNumber = newNumber
+    } else {
+      return
     }
   }
   set setAction(newAction) {
     this.action = newAction
     this.#findAction()
   }
+  get result(){
+    console.log('asdasd')
+    return this.finalValue ? this.finalValue : this.firstNumber;
+  }
   #doCalculation(){
     console.log(this.firstNumber, this.operation, this.secondNumber)
-    this.result = eval(this.firstNumber + this.operation + this.secondNumber)
-    this.firstNumber = this.result;
+    this.finalValue = eval(this.firstNumber + this.operation + this.secondNumber)
+    this.firstNumber = this.finalValue;
   }
   #findAction(){
     console.log("action", this.action.action)
@@ -42,13 +47,29 @@ export class FormulaClass {
       break;
       case "+":
         this.operation = this.action.action
+        this.secondNumber = 0
+      break;
+      case "-":
+        this.operation = this.action.action
+        this.secondNumber = 0
+      break;
+      case "*":
+        this.operation = this.action.action
+        this.secondNumber = 0
+      break;
+      case "/":
+        this.operation = this.action.action
+        this.secondNumber = 0
+      break;
+      case "=":
+        this.#doCalculation()
       break;
     }
   }
   #resetState(){
-    this.firstNumber = null;
-    this.secondNumber = null;
+    this.firstNumber = 0;
+    this.secondNumber = 0;
+    this.finalValue = 0;
     this.operation = null;
-    this.result = 0;
   }
 }

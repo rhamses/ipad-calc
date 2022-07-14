@@ -8,6 +8,7 @@ export class VisorClass {
     this.#watchNumber()
   }
   get showNumber(){
+    console.log(this.number.value, Number(this.number.value))
     if(Number(this.number.value)) {
       this.number.value = Number(this.number.value)
     } else {
@@ -19,8 +20,9 @@ export class VisorClass {
     return this.visorFontSize.value
   }
   get rawNumber(){
-    if(typeof this.number.value === "string" && this.number.value.match(/\d/gmi)) {
-      return Number(this.number.value.replace(".","").replace(",","."))
+    const numberToString = String(this.number.value);
+    if(numberToString && numberToString.match(/\d/gmi)) {
+      return Number(numberToString.replace(".","").replace(",","."))
     }
     return this.number.value
   }
@@ -28,7 +30,7 @@ export class VisorClass {
     this.#setNewNumber(number)
   }
   calcNumber(){
-    this.#breakNumbers();
+    this.#breakNumbers()
     return this.number.value;
   }
   clearVisor(){
@@ -75,13 +77,12 @@ export class VisorClass {
         newNumber.push('-')
       }
       console.log("newNumber", newNumber)
-      return this.number.value = newNumber.reverse().join("")
+      return this.number.value = String(newNumber.reverse().join(""))
     }
   }
   #setNewNumber(nwNumber) {
     console.log("setNewNumberm", nwNumber)
     if(!Number.isInteger(nwNumber) && String(nwNumber) !== ",") {
-      console.log(",,,")
       nwNumber = String(nwNumber).replace(".",",")
     }
     this.number.value += String(nwNumber)
