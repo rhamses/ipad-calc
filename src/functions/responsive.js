@@ -1,11 +1,16 @@
+import { ref, watch } from 'vue'
 export class Responsive {
   constructor() {
-    this.isPortrait = null
-    this.monitorOrientation();    
+    this.isPortrait = ref(null)
+    this.isOrientation()
+    this.monitorOrientation();
+    watch(this.isPortrait, (newValue, oldValue) => {
+      this.isPortrait.value  = newValue
+    })
   }
 // Initialize variable with checkOrientation value
-  static get orientation(){
-    return this.isOrientation()
+  get orientation(){
+    return this.isPortrait.value
   }
 // check to see if PWA is installed on iOS devices. If so, add css class to container
   static get isInstalled(){
@@ -17,12 +22,11 @@ export class Responsive {
   monitorOrientation(){
     window.addEventListener('resize', () => this.isOrientation())
   }
-
   isOrientation(){
     if(window.matchMedia("(orientation: portrait)").matches) {
-      return false 
+      this.isPortrait.value = false
     } else {
-      return true
+      this.isPortrait.value = true
     }
   }
 

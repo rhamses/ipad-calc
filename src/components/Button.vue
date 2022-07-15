@@ -15,7 +15,7 @@
     :class="isActive"
     :data-value="action"
     :data-type="type">
-    <span>{{label}}</span>
+    <span v-html="label"></span>
   </button>
 </template>
 

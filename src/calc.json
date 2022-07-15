@@ -2,19 +2,23 @@
   "standard": [{
     "label": "AC",
     "type": "options",
-    "action": "reset"
+    "action": "reset",
+    "title": "insert value"
   },{
     "label": "+/-",
     "type": "options",
-    "action": "minus one"
+    "action": "minus one",
+    "title": "insert value"
   },{
     "label": "%",
     "type": "options",
-    "action": "percentage"
+    "action": "percentage",
+    "title": "insert value"
   },{
     "label": "/",
     "type": "operation",
-    "action": "/"
+    "action": "/",
+    "title": "insert value"
   },{
     "label": "7",
     "type": "keypad",
@@ -30,7 +34,8 @@
   },{
     "label": "X",
     "type": "operation",
-    "action": "*"
+    "action": "*",
+    "title": "insert value"
   },{
     "label": "4",
     "type": "keypad",
@@ -46,7 +51,8 @@
   },{
     "label": "-",
     "type": "operation",
-    "action": "-"
+    "action": "-",
+    "title": "insert value"
   },{
     "label": "1",
     "type": "keypad",
@@ -62,7 +68,8 @@
   },{
     "label": "+",
     "type": "operation",
-    "action": "+"
+    "action": "+",
+    "title": "insert value"
   },{
     "label": "0",
     "type": "keypad",
@@ -70,132 +77,164 @@
   },{
     "label": ",",
     "type": "keypad",
-    "action": ","
+    "action": ",",
+    "title": "insert value"
   },{
     "label": "=",
     "type": "operation",
-    "action": "="
+    "action": "=",
+    "title": "insert value"
   }],
   "advanced": [{
-    "label": "tmp",
+    "label": "(",
     "type": "formula",
-    "action": ""
+    "action": "(",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": ")",
     "type": "formula",
-    "action": ""
+    "action": ")",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "mc",
     "type": "formula",
-    "action": ""
+    "action": "mc",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "m+",
     "type": "formula",
-    "action": ""
+    "action": "m+",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "m-",
     "type": "formula",
-    "action": ""
+    "action": "m-",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "mr",
     "type": "formula",
-    "action": ""
+    "action": "mr",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "2<sup>nd</sup>",
     "type": "formula",
-    "action": ""
+    "action": "2nd",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "x<sup>2</sup>",
     "type": "formula",
-    "action": ""
+    "action": "x2",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "x<sup>3</sup>",
     "type": "formula",
-    "action": ""
+    "action": "x3",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "x<sup>y</sup>",
     "type": "formula",
-    "action": ""
+    "action": "xy",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "e<sup>x</sup>",
     "type": "formula",
-    "action": ""
+    "action": "ex",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "10<sup>x</sup>",
     "type": "formula",
-    "action": ""
+    "action": "10x",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "1/x",
     "type": "formula",
-    "action": ""
+    "action": "1/x",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "2/x",
     "type": "formula",
-    "action": ""
+    "action": "raiz2",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "3/x",
     "type": "formula",
-    "action": ""
+    "action": "raiz3",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "y/x",
     "type": "formula",
-    "action": ""
+    "action": "raizy",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "In",
     "type": "formula",
-    "action": ""
+    "action": "in",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "log<sub>10</sub>",
     "type": "formula",
-    "action": ""
+    "action": "log10",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "x!",
     "type": "formula",
-    "action": ""
+    "action": "x!",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "sin",
     "type": "formula",
-    "action": ""
+    "action": "sin",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "cos",
     "type": "formula",
-    "action": ""
+    "action": "cos",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "tan",
     "type": "formula",
-    "action": ""
+    "action": "tan",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "e",
     "type": "formula",
-    "action": ""
+    "action": "E",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "EE",
     "type": "formula",
-    "action": ""
+    "action": "EE",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "Rad",
     "type": "formula",
-    "action": ""
+    "action": "rad",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "sinh",
     "type": "formula",
-    "action": ""
+    "action": "sinh",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "cosh",
     "type": "formula",
-    "action": ""
+    "action": "cosh",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "tanh",
     "type": "formula",
-    "action": ""
+    "action": "tanh",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "pi",
     "type": "formula",
-    "action": ""
+    "action": "pi",
+    "title": "insert value"
   },{
-    "label": "tmp",
+    "label": "Rand",
     "type": "formula",
-    "action": ""
+    "action": "random",
+    "title": "insert value"
   }]
 }
 

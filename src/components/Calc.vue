@@ -21,8 +21,7 @@ const Formula = new FormulaClass()
  * RESPONSIVE PROPERTIES
  *
 ********************************************************/
-const { isInstalled, orientation } = ResponsiveUtils
-const landscape = ref(orientation)
+
 /********************************************************
  *
  * FUNCTIONS
@@ -51,7 +50,11 @@ function getValue(e) {
       showVisor(Formula.result)
     break;
     case "operation":
-      console.log("Visor.rawNumber", Visor.rawNumber)
+      Formula.setNumber = Visor.rawNumber
+      Formula.setAction = e
+      showVisor(Formula.result)
+    break;
+    case "formula":
       Formula.setNumber = Visor.rawNumber
       Formula.setAction = e
       showVisor(Formula.result)
@@ -77,22 +80,20 @@ window.addEventListener('keydown', (e) => {
     getValue(key)
   }
 })
-window.addEventListener('resize', () => {
-  landscape.value = orientation
-})
 </script>
 
 <template>
-  <section class="calc" :class="isInstalled">
+  <span style="position: absolute; left: 0; top: 0; color: #fff">{{ResponsiveUtils.orientation}}</span>
+  <section class="calc" :class="ResponsiveUtils.isInstalled">
     <section class="calc--header">
       <input id="visor" type="text" readonly class="visor" :style="Visor.fontSize" v-model="Visor.showNumber">
       <div id="fakevisor" class="visor" :style="Visor.fontSize" style="position:absolute; width: auto; opacity: 0; top: 0; z-index: -1"></div>
     </section>
     <section class="calc--buttons">
-      <Button @click="getValue(item)" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
+      <Button @click="getValue(item)" :title="item.title" :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.standard" :key="index"></Button>
     </section>
-    <section v-if="landscape" class="calc--buttons__extra">
-      <Button @click="getValue(item)"  :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
+    <section v-if="ResponsiveUtils.orientation" class="calc--buttons__extra">
+      <Button @click="getValue(item)" :title="item.title"  :label="item.label" :type="item.type" :action="item.action" v-for="(item, index) in Calc.advanced" :key="index"></Button>
     </section>
   </section>
 </template>
