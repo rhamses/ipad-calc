@@ -2,36 +2,33 @@ import { ref, watch } from 'vue'
 export class VisorClass {
   constructor({chunkSize, visorID}){
     this.chunk = chunkSize
-    this.number = ref(0)
+    this.number = ref(null)
     this.visorID = visorID
     this.visorFontSize = ref({fontSize: "600%"})
     this.#watchNumber()
   }
   get showNumber(){
-    console.log(this.number.value, Number(this.number.value))
-    if(Number(this.number.value)) {
-      this.number.value = Number(this.number.value)
-    } else {
-      this.number.value = this.number.value
-    }
+    console.log("showNumber", this.number.value)
+    if(this.number.value == null){
+      return 0
+    }                 
     return this.number.value;
   }
   get fontSize(){
     return this.visorFontSize.value
   }
   get rawNumber(){
-    const numberToString = String(this.number.value);
-    if(numberToString && numberToString.match(/\d/gmi)) {
-      return Number(numberToString.replace(".","").replace(",","."))
-    }
-    return this.number.value
+    const number = this.#numberToString(this.number.value)
+    return number
   }
   set newNumber(number){
     this.#setNewNumber(number)
   }
   calcNumber(){
-    this.#breakNumbers()
-    return this.number.value;
+    if(this.number.value) {
+      this.#breakNumbers()
+      return this.number.value;
+    }
   }
   clearVisor(){
     this.number.value = ""
@@ -51,12 +48,12 @@ export class VisorClass {
     })
   }  
   #breakNumbers(){
-    const decimal = (this.number.value.includes(",")) ? this.number.value.split(",")[1] : null;
-    let numbers = (this.number.value.includes(",")) ? this.number.value.split(",")[0] : this.number.value;
+    let numbers = String(this.rawNumber)
+    const decimal = (numbers.includes(".")) ? numbers.split(".")[1] : null;
+    numbers = (numbers.includes(".")) ? numbers.split(".")[0] : numbers;
     numbers = numbers.match(/\d/gmi).reverse()
     const parts = Math.ceil(numbers.length/this.chunk)
     const newNumber = []
-    // console.log("numbers", numbers, "parts", parts, "decimal", decimal)
     if(numbers.length > 3) {
       for (let index = 0; index < parts; index++) {
         const sliceBegin = index * this.chunk;
@@ -81,10 +78,21 @@ export class VisorClass {
     }
   }
   #setNewNumber(nwNumber) {
-    console.log("setNewNumberm", nwNumber)
-    if(!Number.isInteger(nwNumber) && String(nwNumber) !== ",") {
-      nwNumber = String(nwNumber).replace(".",",")
+    console.log("setNewNumber", nwNumber)
+    const number = this.#numberToString(this.number.value)
+    if(number) {
+      this.number.value += String(nwNumber)
+    } else if(nwNumber === "," && this.number.value == null) {
+      this.number.value = "0" + String(nwNumber)
+    } else {
+      this.number.value = String(nwNumber)
     }
-    this.number.value += String(nwNumber)
+  }
+  #numberToString(number){
+    const numberToString = String(number);
+    if(numberToString && numberToString.match(/\d/gmi)) {
+      return numberToString.replaceAll(".","").replaceAll(",",".")
+      // return Number(numberToString.replaceAll(".","").replaceAll(",","."))
+    }
   }
 }
