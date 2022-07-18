@@ -1,19 +1,18 @@
 export class FormulaClass {
   constructor(){
-    this.firstNumber = 0
-    this.secondNumber = 0
-    this.finalValue = 0
+    this.firstNumber = null
+    this.secondNumber = null
+    this.finalValue = null
     this.action = null
     this.operation = null
     this.currentPressedButton = null
   }
   set setNumber(newNumber) {
-    if(this.firstNumber === 0) {
+    console.log("setNumberFormula", newNumber)
+    if(this.firstNumber === null) {
       this.firstNumber = newNumber
-    } else if (this.secondNumber === 0){
-      this.secondNumber = newNumber
     } else {
-      return
+      this.secondNumber = newNumber
     }
   }
   set setAction(newAction) {
@@ -26,7 +25,6 @@ export class FormulaClass {
   #doCalculation(){
     console.log(this.firstNumber, this.operation, this.secondNumber)
     this.finalValue = eval(this.firstNumber + this.operation + this.secondNumber)
-    this.firstNumber = this.finalValue;
   }
   #findAction(){
     console.log("action", this.action, this.action.action)
@@ -169,9 +167,9 @@ export class FormulaClass {
     }
   }
   #resetState(){
-    this.firstNumber = 0;
-    this.secondNumber = 0;
-    this.finalValue = 0;
+    this.firstNumber = null;
+    this.secondNumber = null;
+    this.finalValue = null;
     this.operation = null;
   }
 }

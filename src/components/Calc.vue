@@ -27,41 +27,26 @@ const Formula = new FormulaClass()
  * FUNCTIONS
  *
 ********************************************************/
-function showVisor(number){
-  Visor.clearVisor()
-  Visor.newNumber = number
-  Visor.calcNumber()
-}
 function getValue(e) {
-  switch(e.type){
-    case "keypad":
-      if(Formula.operation) {
-        Visor.clearVisor();
-        Visor.newNumber = e.action
-        Formula.setNumber = Visor.rawNumber
-      } else {
-        Visor.newNumber = e.action
-      }
+  if(e.type === "keypad") {
+    if(Formula.operation) {
+      Visor.newNumber = e.action
+      Formula.setNumber = Visor.rawNumber
+    } else {
+      Visor.newNumber = e.action
+    }
+    Visor.hasOperation = false
+    Visor.calcNumber()
+  } else {
+    Formula.setNumber = Visor.rawNumber
+    Formula.setAction = e
+    Visor.hasOperation = true
+    if(e.action == "reset"){
+      Visor.clearVisor()
+    } else if(Formula.result) {
+      Visor.newNumber = Formula.result
       Visor.calcNumber()
-    break;
-    case "options":
-      Formula.setNumber = Visor.rawNumber
-      Formula.setAction = e
-      showVisor(Formula.result)
-    break;
-    case "operation":
-      Formula.setNumber = Visor.rawNumber
-      Formula.setAction = e
-      showVisor(Formula.result)
-    break;
-    case "formula":
-      Formula.setNumber = Visor.rawNumber
-      Formula.setAction = e
-      showVisor(Formula.result)
-    break;
-    default:
-      console.log("life that follows")
-    break;
+    }
   }
 }
 /********************************************************

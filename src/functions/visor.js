@@ -5,33 +5,31 @@ export class VisorClass {
     this.number = ref(null)
     this.visorID = visorID
     this.visorFontSize = ref({fontSize: "600%"})
+    this.hasOperation = false
     this.#watchNumber()
   }
   get showNumber(){
-    console.log("showNumber", this.number.value)
     if(this.number.value == null){
       return 0
-    }                 
+    }
     return this.number.value;
   }
   get fontSize(){
     return this.visorFontSize.value
   }
   get rawNumber(){
-    const number = this.#numberToString(this.number.value)
+    const number = Number(this.#numberToString(this.number.value))
     return number
   }
   set newNumber(number){
     this.#setNewNumber(number)
   }
   calcNumber(){
-    if(this.number.value) {
-      this.#breakNumbers()
-      return this.number.value;
-    }
+    this.#breakNumbers()
+    return this.number.value;
   }
   clearVisor(){
-    this.number.value = ""
+    this.number.value = 0
   }
   #watchNumber(){
     watch(this.number, async(newValue, oldValue) => {
@@ -39,18 +37,17 @@ export class VisorClass {
       const fakeVisor = document.querySelector("#fakevisor");
       fakeVisor.innerHTML = newValue;
       const fakeVisorWidth = fakeVisor.clientWidth - fakeVisor.clientWidth * (8/100)
-      // console.log(newValue, fakeVisor.clientWidth, visor.clientWidth)
       if(fakeVisorWidth >= visor.clientWidth) {
         const oldFontSize = Number(this.visorFontSize.value.fontSize.replace("%",''))
         const newFontSize =  oldFontSize - oldFontSize * (20/100) + "%";
         this.visorFontSize.value = ({"fontSize": newFontSize})
       }
     })
-  }  
+  }
   #breakNumbers(){
-    let numbers = String(this.rawNumber)
-    const decimal = (numbers.includes(".")) ? numbers.split(".")[1] : null;
-    numbers = (numbers.includes(".")) ? numbers.split(".")[0] : numbers;
+    let numbers = this.#numberToString(this.number.value)
+    const decimal = (numbers.includes(",")) ? numbers.split(",")[1] : null;
+    numbers = (numbers.includes(",")) ? numbers.split(",")[0] : numbers;
     numbers = numbers.match(/\d/gmi).reverse()
     const parts = Math.ceil(numbers.length/this.chunk)
     const newNumber = []
@@ -78,21 +75,31 @@ export class VisorClass {
     }
   }
   #setNewNumber(nwNumber) {
-    console.log("setNewNumber", nwNumber)
-    const number = this.#numberToString(this.number.value)
-    if(number) {
-      this.number.value += String(nwNumber)
-    } else if(nwNumber === "," && this.number.value == null) {
-      this.number.value = "0" + String(nwNumber)
+    if(this.number.value == null) {
+      if(nwNumber === ",") {
+        this.number.value = "0" + this.#numberToString(nwNumber)
+      } else {
+        this.number.value = this.#numberToString(nwNumber)
+      }
+    } else if(this.hasOperation) {
+      this.number.value = this.#numberToString(nwNumber)
     } else {
-      this.number.value = String(nwNumber)
+      this.number.value += this.#numberToString(nwNumber)
     }
   }
   #numberToString(number){
-    const numberToString = String(number);
-    if(numberToString && numberToString.match(/\d/gmi)) {
-      return numberToString.replaceAll(".","").replaceAll(",",".")
-      // return Number(numberToString.replaceAll(".","").replaceAll(",","."))
+    let numberToString = String(number);
+    if(numberToString.length === 2 && numberToString.split("")[0] === "0") {
+      numberToString = numberToString.substring(1,numberToString.length)
+      return numberToString
+    } else if(numberToString.match(/\d/gmi)) {
+      if(this.hasOperation && number % 1 !== 0){
+        return numberToString.replaceAll(".",",")
+      } else {
+        return numberToString.replaceAll(".","").replaceAll(",",".")
+      }
+    } else {
+      return numberToString
     }
   }
 }
